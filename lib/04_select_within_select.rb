@@ -99,7 +99,9 @@ def sparse_continents
   execute(<<-SQL)
   SELECT name, continent, population
   FROM countries
-  WHERE NOT (
-    population < 25000000)
+  WHERE continent NOT IN (
+    SELECT DISTINCT continent
+    FROM countries
+    WHERE population >= 25000000)
   SQL
 end
